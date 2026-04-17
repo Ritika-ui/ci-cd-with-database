@@ -22,6 +22,10 @@ def init_db():
 init_db()
 
 # Get all tasks
+@app.route("/")
+def home():
+    return "Task Manager API is running 🚀"
+
 @app.route("/tasks", methods=["GET"])
 def get_tasks():
     conn = sqlite3.connect(DB)
