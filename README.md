@@ -1,6 +1,6 @@
-# 🚀 Task Manager API (Docker + CI/CD)
+# 🚀 Task Manager API (Docker + Flask + PostgreSQL + Nginx + CI/CD)
 
-A simple **Flask-based Task Manager API** with full **Dockerization and CI/CD pipeline**, deployed live on the cloud.
+A fully containerized **Task Manager REST API** built using Flask, PostgreSQL, and Nginx with Docker Compose, including CI/CD deployment and persistent database storage.
 
 ---
 
@@ -15,144 +15,115 @@ A simple **Flask-based Task Manager API** with full **Dockerization and CI/CD pi
 * Create tasks ✅
 * View all tasks 📋
 * Delete tasks ❌
-* REST API endpoints
-* Dockerized application 🐳
-* Automated CI/CD pipeline ⚙️
-* Live deployment 🌍
+* REST API (Flask)
+* Reverse proxy using Nginx 🔁
+* PostgreSQL database 🗄️ 
+* Persistent storage using Docker volumes 💾
+* Multi-container setup 🐳
+* CI/CD pipeline ⚙️ 
+* Cloud deployment 🌍
 
 ---
 
 ## 🧱 Tech Stack
 
 * **Backend:** Flask (Python)
-* **Database:** SQLite
-* **Containerization:** Docker
+* **Database:** PostgreSQL
+* **Proxy:** Nginx
+* **Containerization:** Docker + Docker Compose
 * **CI/CD:** GitHub Actions
-* **Deployment:** Render
+* **Deployment:** Render / Cloud
 
 ---
 
 ## 📁 Project Structure
 
-```
 project/
-├── app.py
+│
+├── app/
+│ └── app.py
+│
+├── nginx/
+│ └── nginx.conf
+│
 ├── requirements.txt
 ├── Dockerfile
-├── nginx/
-├── .github/workflows/
-```
+├── docker-compose.yml
+└── README.md
 
 ---
 
-## ⚙️ API Endpoints
+## ⚙️ Architecture
 
-### 🔹 Get all tasks
+```text
+User
+ ↓
+Nginx (Reverse Proxy)
+ ↓
+Flask Backend (API)
+ ↓
+PostgreSQL (Persistent Volume)
 
-```
-GET /tasks
-```
+🔌 API Endpoints
 
----
+🔹 Get all tasks
+   GET /tasks
+🔹 Add a task
+   POST /tasks
 
-### 🔹 Add a task
-
-```
-POST /tasks
-```
-
-**Body:**
-
-```json
+JSON
 {
-  "title": "learn devops"
+  "title": "learn docker"
 }
-```
+🔹 Delete a task
+   DELETE /tasks/<id>
 
----
+🐳 Run Locally with Docker
 
-### 🔹 Delete a task
+1. Build and start containers
+docker-compose up -d --build
 
-```
-DELETE /tasks/<id>
-```
+2. Stop containers
+docker-compose down
 
----
 
-## 🐳 Run Locally with Docker
+💾 Database Persistence
 
-### 1. Build image
+This project uses Docker volumes to persist PostgreSQL data:
 
-```
-docker build -t taskapp .
-```
+volumes:
+  postgres-data:
 
-### 2. Run container
+✔ Data remains even after container restart
 
-```
-docker run -p 5000:5000 taskapp
-```
 
-### 3. Open in browser
+🔄 CI/CD Pipeline
 
-```
-http://localhost:5000/tasks
-```
+Automates deployment using GitHub Actions:
 
----
+GitHub push → Build Docker image → Deploy → Live update
 
-## 🔄 CI/CD Pipeline
+🧠 Key Learnings
+-> Flask REST API development
+-> Docker multi-container architecture
+-> Reverse proxy using Nginx
+-> PostgreSQL integration
+-> Docker networking
+-> Data persistence using volumes
+-> CI/CD automation
 
-This project uses GitHub Actions to automate:
 
-* Build Docker image
-* Push image to registry
-* Deploy application automatically
+⚠️ Notes
+-> Backend communicates with DB using Docker service name (db)
+-> Nginx forwards requests from port 8080 → Flask app
+-> PostgreSQL runs in a persistent Docker volume
 
-### Workflow:
 
-```
-git push → CI build → Docker image → Deploy → Live app
-```
+👩‍💻 Author
 
----
+Ritika Khadka
 
-## 🧠 Key Learnings
 
-* Containerization using Docker
-* Reverse proxy setup with Nginx
-* CI/CD pipeline automation
-* Cloud deployment
-* Backend API development
-* Database integration
+⭐ If you like this project
 
----
-
-## ⚠️ Note
-
-* SQLite database is currently **temporary (inside container)**
-* Data resets on redeploy
-
-👉 Future improvement: Use persistent storage or cloud database
-
----
-
-## 🚀 Future Improvements
-
-* Add frontend (React)
-* Use PostgreSQL database
-* Add authentication (login/signup)
-* Implement Docker volumes
-* Deploy on cloud infrastructure (AWS)
-
----
-
-## 👩‍💻 Author
-
-**Ritika Khadka**
-
----
-
-## ⭐ If you like this project
-
-Give it a ⭐ on GitHub!!!
+If you found this useful, please consider giving it a ⭐ on GitHub!

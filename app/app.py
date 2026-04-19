@@ -1,40 +1,47 @@
 from flask import Flask, request, jsonify
-import sqlite3
+import psycopg2
 import os
 
 app = Flask(__name__)
 
-DB = "tasks.db"
+# Database connection
+conn = psycopg2.connect(
+    host="db",              # Docker service name
+    database="taskdb",
+    user="postgres",
+    password="password",
+    port=5432
+)
+
+cur = conn.cursor()
 
 # Create table if not exists
 def init_db():
-    conn = sqlite3.connect(DB)
-    cursor = conn.cursor()
-    cursor.execute("""
+    cur.execute("""
         CREATE TABLE IF NOT EXISTS tasks (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
             title TEXT NOT NULL
         )
     """)
     conn.commit()
-    conn.close()
 
 init_db()
 
-# Get all tasks
+# Home route
 @app.route("/")
 def home():
     return "Task Manager API is running 🚀"
 
+# Get all tasks
 @app.route("/tasks", methods=["GET"])
 def get_tasks():
-    conn = sqlite3.connect(DB)
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM tasks")
-    tasks = cursor.fetchall()
-    conn.close()
+    cur.execute("SELECT * FROM tasks")
+    tasks = cur.fetchall()
 
-    return jsonify(tasks)
+    # Convert tuples to JSON-friendly format
+    task_list = [{"id": t[0], "title": t[1]} for t in tasks]
+
+    return jsonify(task_list)
 
 # Add a task
 @app.route("/tasks", methods=["POST"])
@@ -42,24 +49,20 @@ def add_task():
     data = request.get_json()
     title = data.get("title")
 
-    conn = sqlite3.connect(DB)
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO tasks (title) VALUES (?)", (title,))
+    cur.execute("INSERT INTO tasks (title) VALUES (%s)", (title,))
     conn.commit()
-    conn.close()
 
     return {"message": "Task added!"}
+
 # Delete a task
 @app.route("/tasks/<int:id>", methods=["DELETE"])
 def delete_task(id):
-    conn = sqlite3.connect(DB)
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM tasks WHERE id = ?", (id,))
+    cur.execute("DELETE FROM tasks WHERE id = %s", (id,))
     conn.commit()
-    conn.close()
 
     return {"message": "Task deleted!"}
 
+# Run app
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
