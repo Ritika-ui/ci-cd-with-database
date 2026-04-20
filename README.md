@@ -35,14 +35,21 @@ A fully containerized **Task Manager REST API** built using Flask, PostgreSQL, a
 * **Deployment:** Render / Cloud
 
 ---
-📁 Project Structure
-app/                 Flask backend (routes, db, config)
-nginx/               Reverse proxy config
-docker-compose.yml   Multi-container setup
-Dockerfile           App container build
-requirements.txt     Python dependencies
-.github/             CI/CD pipeline
-README.md            Project documentation
+## 📁 Project Structure
+
+```text
+app/
+├── app.py
+├── routes/
+├── db/
+├── config/
+
+nginx/
+docker-compose.yml
+Dockerfile
+requirements.txt
+.github/
+README.md
 ---
 
 ## ⚙️ Architecture
