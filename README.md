@@ -65,8 +65,8 @@ project/
 ├── README.md                  # Project documentation
 │
 ├── .github/
-   └── workflows/
-        └── ci.yml             # CI pipeline (GitHub Actions)
+│   └── workflows/
+│       └── ci.yml             # CI pipeline (GitHub Actions)
 ---
 
 ## ⚙️ Architecture
