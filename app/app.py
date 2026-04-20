@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # Database connection
 conn = psycopg2.connect(
-    os.environ.get("DATABASE_URL""),
+    os.environ.get("DATABASE_URL"),
     sslmode="require"
 )
 cur = conn.cursor()
