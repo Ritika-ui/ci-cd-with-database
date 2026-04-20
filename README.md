@@ -1,130 +1,151 @@
-# 🚀 Task Manager API (Docker + Flask + PostgreSQL + Nginx + CI/CD)
+# 🚀 Task Manager API
 
-A fully containerized **Task Manager REST API** built using Flask, PostgreSQL, and Nginx with Docker Compose, including CI/CD deployment and persistent database storage.
+> A fully containerized REST API built with Flask, PostgreSQL, and Nginx — featuring Docker Compose, CI/CD pipeline, and persistent database storage.
 
----
-
-## 🌐 Live Demo
-
-👉 https://ci-cd-with-database-1.onrender.com
+🌐 **Live Demo:** [https://ci-cd-with-database-1.onrender.com](https://ci-cd-with-database-1.onrender.com)
 
 ---
 
-## 📌 Features
+## ✨ Features
 
-* Create tasks ✅
-* View all tasks 📋
-* Delete tasks ❌
-* REST API (Flask)
-* Reverse proxy using Nginx 🔁
-* PostgreSQL database 🗄️ 
-* Persistent storage using Docker volumes 💾
-* Multi-container setup 🐳
-* CI/CD pipeline ⚙️ 
-* Cloud deployment 🌍
+- Create, view, and delete tasks via REST API
+- Reverse proxy using Nginx
+- PostgreSQL database with persistent storage
+- Multi-container setup with Docker Compose
+- Automated CI/CD pipeline with GitHub Actions
+- Cloud deployment on Render
 
 ---
 
 ## 🧱 Tech Stack
 
-* **Backend:** Flask (Python)
-* **Database:** PostgreSQL
-* **Proxy:** Nginx
-* **Containerization:** Docker + Docker Compose
-* **CI/CD:** GitHub Actions
-* **Deployment:** Render / Cloud
-
+| Layer | Technology |
+|---|---|
+| Backend | Flask (Python) |
+| Database | PostgreSQL |
+| Proxy | Nginx |
+| Containerization | Docker + Docker Compose |
+| CI/CD | GitHub Actions |
+| Deployment | Render |
 
 ---
+
 ## 📁 Project Structure
 
-```text
-app/
-├── app.py
-├── routes/
-├── db/
-├── config/
+```
+├── app/
+│   ├── app.py
+│   ├── routes/
+│   ├── db/
+│   └── config/
+├── nginx/
+├── .github/
+│   └── workflows/
+├── docker-compose.yml
+├── Dockerfile
+├── requirements.txt
+└── README.md
+```
 
-nginx/
-docker-compose.yml
-Dockerfile
-requirements.txt
-.github/
-README.md
 ---
-
 
 ## ⚙️ Architecture
 
-```text
+```
 User
  ↓
-Nginx (Reverse Proxy)
+Nginx (Reverse Proxy) :8080
  ↓
-Flask Backend (API)
+Flask Backend (API) :5000
  ↓
-PostgreSQL (Persistent Volume)
+PostgreSQL (Persistent Volume) :5432
+```
 
-🔌 API Endpoints
+---
 
-🔹 Get all tasks
-   GET /tasks
-🔹 Add a task
-   POST /tasks
+## 🔌 API Endpoints
 
-JSON
+### Get all tasks
+```
+GET /tasks
+```
+
+### Add a task
+```
+POST /tasks
+```
+```json
 {
   "title": "learn docker"
 }
-🔹 Delete a task
-   DELETE /tasks/<id>
+```
 
-🐳 Run Locally with Docker
+### Delete a task
+```
+DELETE /tasks/<id>
+```
 
-1. Build and start containers
+---
+
+## 🐳 Run Locally with Docker
+
+**Build and start containers:**
+```bash
 docker-compose up -d --build
+```
 
-2. Stop containers
+**Stop containers:**
+```bash
 docker-compose down
+```
 
+---
 
-💾 Database Persistence
+## 💾 Database Persistence
 
-This project uses Docker volumes to persist PostgreSQL data:
+PostgreSQL data is stored in a named Docker volume so it survives container restarts:
 
+```yaml
 volumes:
   postgres-data:
+```
 
-✔ Data remains even after container restart
+---
 
+## 🔄 CI/CD Pipeline
 
-🔄 CI/CD Pipeline
+Every push to `main` triggers the automated pipeline:
 
-Automates deployment using GitHub Actions:
+```
+GitHub Push → Build Docker Image → Push to Docker Hub → Deploy → Live
+```
 
-GitHub push → Build Docker image → Deploy → Live update
+---
 
-🧠 Key Learnings
--> Flask REST API development
--> Docker multi-container architecture
--> Reverse proxy using Nginx
--> PostgreSQL integration
--> Docker networking
--> Data persistence using volumes
--> CI/CD automation
+## 🧠 Key Learnings
 
+- Flask REST API development
+- Docker multi-container architecture
+- Reverse proxy setup with Nginx
+- PostgreSQL integration with Flask
+- Docker networking between containers
+- Data persistence using volumes
+- CI/CD automation with GitHub Actions
 
-⚠️ Notes
--> Backend communicates with DB using Docker service name (db)
--> Nginx forwards requests from port 8080 → Flask app
--> PostgreSQL runs in a persistent Docker volume
+---
 
+## ⚠️ Notes
 
-👩‍💻 Author
+- Backend communicates with the database using Docker service name `db` (internal DNS)
+- Nginx forwards requests from port `8080` → Flask app on port `5000`
+- PostgreSQL data persists across container restarts via Docker volume
 
-Ritika Khadka
+---
 
+## 👩‍💻 Author
 
-⭐ If you like this project
+**Ritika Khadka**
 
-If you found this useful, please consider giving it a ⭐ on GitHub!
+---
+
+⭐ If you found this useful, consider giving it a star on GitHub!
