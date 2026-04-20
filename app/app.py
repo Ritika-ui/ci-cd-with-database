@@ -6,11 +6,11 @@ app = Flask(__name__)
 
 # Database connection
 conn = psycopg2.connect(
-    host="db",              # Docker service name
-    database="taskdb",
-    user="postgres",
-    password="password",
-    port=5432
+    host=os.environ.get("DB_HOST"),
+    database=os.environ.get("DB_NAME"),
+    user=os.environ.get("DB_USER"),
+    password=os.environ.get("DB_PASSWORD"),
+    port=os.environ.get("DB_PORT", 5432)
 )
 
 cur = conn.cursor()
