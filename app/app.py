@@ -5,14 +5,7 @@ import os
 app = Flask(__name__)
 
 # Database connection
-conn = psycopg2.connect(
-    host=os.environ.get("DB_HOST"),
-    database=os.environ.get("DB_NAME"),
-    user=os.environ.get("DB_USER"),
-    password=os.environ.get("DB_PASSWORD"),
-    port=os.environ.get("DB_PORT", 5432)
-)
-
+conn = psycopg2.connect(os.environ.get("postgresql://ritika_khadka_user:zFmo94P5FSPE1FDKDKcS4EbCRxdKlWaI@dpg-d7ip3mfaqgkc73a2kum0-a.ohio-postgres.render.com/ritika_khadka"))
 cur = conn.cursor()
 
 # Create table if not exists
