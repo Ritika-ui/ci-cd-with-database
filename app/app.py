@@ -8,7 +8,7 @@ def home():
     return "App is running 🚀"
 
 
-@app.route("/data", methods=["POST"])
+@app.route("/data", methods=["GET"])
 def data():
     user = request.json["user"]
     return jsonify({"message": f"Hello {user}"})
@@ -17,14 +17,14 @@ def data():
 @app.route("/config")
 def config():
     debug_mode = os.environ.get("DEBUG_MODE")
-    if debug_mode == "true":
+    if debug_mode == "True":
         return "Debugging is ON"
     return 100 / 0
 
 
 @app.route("/secret")
 def secret():
-    return "Secret loaded" if key else "Missing secret"
+    return os.environ.get("API_KEY").upper()
 
 
 if __name__ == "__main__":
