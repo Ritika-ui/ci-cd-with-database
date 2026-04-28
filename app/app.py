@@ -8,7 +8,7 @@ def home():
     return "App is running 🚀"
 
 
-@app.route("/data", methods=["POST"])
+@app.route("/data", methods=["GET"])
 def data():
     
     return jsonify({"message": "Hello"})
