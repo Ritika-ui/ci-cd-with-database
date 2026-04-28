@@ -24,7 +24,7 @@ def config():
 
 @app.route("/secret")
 def secret():
-    return os.environ.get("API_KEY").upper()
+    return "Secret loaded" if key else "Missing secret"
 
 
 if __name__ == "__main__":
