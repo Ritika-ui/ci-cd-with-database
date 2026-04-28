@@ -11,9 +11,6 @@ def home():
 def data():
     return jsonify({"message": "This is your data endpoint"})
 
-@app.route("/env")
-def env():
-    return "huhhh"
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
