@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import os
 
 app = Flask(__name__)
@@ -7,9 +7,24 @@ app = Flask(__name__)
 def home():
     return "App is running 🚀"
 
-@app.route("/data")
+
+@app.route("/data", methods=["POST"])
 def data():
-    return jsonify({"message": "This is your data endpoint"})
+    user = request.json["user"]
+    return jsonify({"message": f"Hello {user}"})
+
+
+@app.route("/config")
+def config():
+    debug_mode = os.environ.get("DEBUG_MODE")
+    if debug_mode == "true":
+        return "Debugging is ON"
+    return 100 / 0
+
+
+@app.route("/secret")
+def secret():
+    return os.environ.get("API_KEY").upper()
 
 
 if __name__ == "__main__":
