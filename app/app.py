@@ -1,14 +1,19 @@
-from flask import Flask
-from app.routes.tasks import tasks_bp
-import os 
+from flask import Flask, jsonify
+import os
 
 app = Flask(__name__)
 
-app.register_blueprint(tasks_bp)
-
 @app.route("/")
 def home():
-    return "Task Manager API is running 🚀"
+    return "App is running 🚀"
+
+@app.route("/data")
+def data():
+    return jsonify({"message": "This is your data endpoint"})
+
+@app.route("/env")
+def env():
+    return os.environ["SECRET_KEY"]
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
