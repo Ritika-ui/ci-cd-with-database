@@ -8,7 +8,7 @@ def home():
     return "App is running 🚀"
 
 
-@app.route("/data", methods=["GET"])
+@app.route("/data", methods=["POST"])
 def data():
     user = request.json["user"]
     return jsonify({"message": f"Hello {user}"})
@@ -24,7 +24,7 @@ def config():
 
 @app.route("/secret")
 def secret():
-    return os.environ.get("API_KEY").upper()
+    return os.environ.get("API_KEY")
 
 
 if __name__ == "__main__":
