@@ -13,7 +13,7 @@ def data():
 
 @app.route("/env")
 def env():
-    return os.environ["SECRET_KEY"]
+    return "huhhh"
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
