@@ -10,8 +10,8 @@ def home():
 
 @app.route("/data", methods=["POST"])
 def data():
-    user = request.json["user"]
-    return jsonify({"message": f"Hello {user}"})
+    
+    return jsonify({"message": "Hello"})
 
 
 @app.route("/config")
