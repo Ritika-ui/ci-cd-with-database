@@ -8,15 +8,18 @@ def home():
     return "App is running 🚀"
 
 
-@app.route("/data", methods=["POST"])
+@app.route("/data", methods=["GET", "POST"])
 def data():
+    if request.method == "GET":
+        return "Use POST with JSON"
+
     data = request.get_json()
 
     if not data or "user" not in data:
-        return jsonify({"error": "Missing 'user' in JSON"}), 400
+        return {"error": "Missing user"}, 400
 
-    user = data["user"]
-    return jsonify({"message": f"Hello {user}"})
+    return {"message": f"Hello {data['user']}"}
+
 @app.route("/config")
 def config():
     debug_mode = os.environ.get("DEBUG_MODE")
